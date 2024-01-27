@@ -4,3 +4,26 @@ tasks:
   test:
     cmds:
       - python3 -m unittest discover -p 'test_*.py' {{.CLI_ARGS}}
+
+  mypy:
+    desc: Run mypy tests
+    cmds:
+      - mypy .
+
+  flake8:
+    cmds:
+      - flake8 logus
+
+  format:
+    desc: To format with black and remove not needed imported libraries
+    cmds:
+      - black logus
+      - isort --profile black -sl logus
+      - autoflake --remove-all-unused-imports --ignore-init-module-imports -i -r logus
+      - isort -m 3 logus
+      - task: flake8
+      - task: mypy
+
+  dev:install:
+    cmds:
+      - pip install -r requirements/requirements.dev.txt

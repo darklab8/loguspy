@@ -1,0 +1,6 @@
+black==23.10.0
+flake8
+black
+isort
+autoflake
+mypy

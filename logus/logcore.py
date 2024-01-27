@@ -1,9 +1,9 @@
 import json
 import logging
 from typing import Dict
-from .logtypes import LogOption, LogParams
 
 from . import settings
+from .logtypes import LogOption, LogParams
 
 log_levels_str_to_int: Dict[str, int] = {"": logging.WARN}
 log_levels_str_to_int.update(logging._nameToLevel)

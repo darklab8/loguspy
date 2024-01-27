@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push: {}
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linter:
+    runs-on: ubuntu-22.04
+    name: linting:python=${{ matrix.python-version }},django=${{ matrix.django }}
+    strategy:
+      matrix:
+        python-version:
+          - "3.8"
+          - "3.11"
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+      - name: Install Task
+        run: |
+          sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+      - name: Install requirements
+        run: |
+          task dev:install
+      - name: Black
+        run: black --check logus
+      - name: Isort
+        run: isort --profile black --check logus
+      - name: Flake8
+        uses: py-actions/flake8@v2
+      - name: Tests
+        run: task test
