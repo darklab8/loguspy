@@ -24,4 +24,4 @@ In order to function with python well, recommendation to turn on
 
 # Alternative Versions
 
-- [Version in golang](github.com/darklab8/logusgo)
+- [Version in golang](https://github.com/darklab8/logusgo)
