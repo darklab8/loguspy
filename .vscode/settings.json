@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": true,
+    "terminal.integrated.env.linux": {
+        "LOGUS_LOG_LEVEL": "DEBUG",
+        "LOGUS_LOG_JSON": "true"
+    }
+}
