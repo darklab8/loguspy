@@ -29,6 +29,8 @@ Static typing approach brings here consistent way to define key values to final 
 
 ## How to use
 
+install with `pip install typelog`
+
 examples/types.py
 ```py
 from dataclasses import dataclass
