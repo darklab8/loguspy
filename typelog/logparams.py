@@ -1,4 +1,4 @@
-from .types import LogType, LogAttrs
+from .types import LogAttrs, LogType
 
 
 def Error(value: Exception) -> LogType:

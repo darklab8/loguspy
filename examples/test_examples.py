@@ -3,7 +3,8 @@ from typelog import get_logger
 import typelog
 from . import logtypes
 from . import types
-from typelog.utils import Loggers, LibName, LogLevel
+from typelog.utils import Loggers, LogConfig
+from typelog.types import LibName, LogLevel, RootLogLevel
 import logging
 
 logger = get_logger(__name__)
@@ -14,10 +15,8 @@ class TestExamples(unittest.TestCase):
 
     def setUp(self) -> None:
         Loggers(
-            root_log_level=logging.DEBUG,
-            log_levels={
-                LibName("examples"): LogLevel(logging.DEBUG),
-            }, 
+            RootLogLevel(logging.DEBUG),
+            LogConfig(LibName("examples"), LogLevel(logging.DEBUG)),
             add_time=True,
         ).configure()
 

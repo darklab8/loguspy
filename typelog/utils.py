@@ -1,32 +1,46 @@
 import json
 import logging
-import os
-from dataclasses import dataclass, field
-from typing import Dict, List, NewType
+from typing import List
 
-from . import settings
-
-LibName = NewType("LibName", str)
-LogLevel = NewType("LogLevel", int)
+from . import settings, types
 
 is_configured: bool = False
 
 
-@dataclass
-class Loggers:
-    root_log_level: int
-    log_levels: Dict[LibName, LogLevel] = field(default_factory=dict)
-    turn_json: bool = False
+class LogConfig:
+    def __init__(
+        self,
+        lib_name: types.LibName,
+        log_level: types.LogLevel,
+    ):
+        self.lib_name = lib_name
+        self.log_level: types.LogLevel = log_level
 
-    add_thread: bool = os.environ.get("TYPELOG_ADD_THREAD") == "true"
-    add_process: bool = os.environ.get("TYPELOG_ADD_PROCESS") == "true"
-    add_level: bool = os.environ.get("TYPELOG_ADD_LEVEL") == "true"
-    add_filepath: bool = os.environ.get("TYPELOG_ADD_FILEPATH") == "true"
-    add_time: bool = os.environ.get("TYPELOG_ADD_TIME") == "true"
+
+class Loggers:
+    def __init__(
+        self,
+        root_log_level: types.RootLogLevel,
+        *log_configs: LogConfig,
+        turn_json: bool = settings.LOG_JSON,
+        add_thread: bool = settings.add_thread,
+        add_process: bool = settings.add_thread,
+        add_level: bool = settings.add_thread,
+        add_filepath: bool = settings.add_thread,
+        add_time: bool = settings.add_thread,
+    ):
+        self.root_log_level = root_log_level
+        self.log_configs = log_configs
+        self.turn_json = turn_json
+        self.add_thread = add_thread
+        self.add_process = add_process
+        self.add_level = add_level
+        self.add_filepath = add_filepath
+        self.add_time = add_time
 
     @property
     def _is_turn_json(self) -> bool:
-        return settings.LOG_JSON or self.turn_json
+        return settings.LOG_JSON or bool(self.turn_json)
 
     @property
     def _format_json(self) -> str:
@@ -79,14 +93,14 @@ class Loggers:
         if is_configured:
             return
 
-        for lib_name, log_level in self.log_levels.items():
+        for log_config in self.log_configs:
             loggers = [
                 logging.getLogger(name)
                 for name in logging.root.manager.loggerDict
-                if name.startswith(lib_name)
+                if name.startswith(log_config.lib_name)
             ]
             for logger in loggers:
-                logger.setLevel(log_level)
+                logger.setLevel(log_config.log_level)
 
         root_logger = logging.getLogger("")
         root_logger.setLevel(self.root_log_level)
