@@ -1,7 +1,7 @@
 import json
 import logging
-from typing import Dict, List, Optional
 from copy import deepcopy
+from typing import Dict, List, Optional
 
 from . import settings
 from .logtypes import LogOption, LogParams
@@ -55,19 +55,19 @@ class Logus:
         self._turn_json = turn_json
 
     def debug(self, message: str, *args: LogOption) -> None:
-        self.logger.debug(StructuredMessage(message,self._turn_json, *args))
+        self.logger.debug(StructuredMessage(message, self._turn_json, *args))
 
     def info(self, message: str, *args: LogOption) -> None:
         self.logger.info(StructuredMessage(message, self._turn_json, *args))
 
     def warn(self, message: str, *args: LogOption) -> None:
-        self.logger.warning(StructuredMessage(message,self._turn_json,  *args))
+        self.logger.warning(StructuredMessage(message, self._turn_json, *args))
 
     def error(self, message: str, *args: LogOption) -> None:
-        self.logger.error(StructuredMessage(message,self._turn_json,  *args))
+        self.logger.error(StructuredMessage(message, self._turn_json, *args))
 
     def fatal(self, message: str, *args: LogOption) -> None:
-        self.logger.fatal(StructuredMessage(message,self._turn_json,  *args))
+        self.logger.fatal(StructuredMessage(message, self._turn_json, *args))
 
     def with_fields(self, *args: LogOption) -> "Logus":
         logger = deepcopy(self)
