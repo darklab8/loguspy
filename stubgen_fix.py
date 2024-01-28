@@ -39,7 +39,7 @@ for path in pathlist:
         for py_line in py_file:
             if "from typing" in py_line:
                 for pyi_i, pyi_line in enumerate(pyi_file):
-                    if f"from typing" in pyi_line:
+                    if "from typing" in pyi_line:
                         pyi_file[pyi_i] = py_line
 
     with open(path_in_str, "w") as file:
