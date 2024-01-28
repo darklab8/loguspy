@@ -1,4 +1,14 @@
-from .types import LogAttrs, LogType
+import typing
+from .types import LogAttrs, LogType, Serialazable
+
+
+
+def Any(key: str, value: Serialazable) -> LogType:
+    def add_option(params: LogAttrs) -> None:
+        params[key] = value
+
+    return add_option
+
 
 
 def Error(value: Exception) -> LogType:
