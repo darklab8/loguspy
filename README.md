@@ -16,6 +16,10 @@ Static typing approach brings here consistent way to define key values to final 
   - accepts maps and structs as its params. It will parse them on their own.
 [See folder for up to date examples](./examples)
 
+# Alternative Versions
+
+- [Version in golang](https://github.com/darklab8/go-typelog)
+
 # Python specifics
 
 - In order to function with python extra well, recommendation to turn on
@@ -102,7 +106,3 @@ class TestExamples(unittest.TestCase):
         logger3.info("logger3 printed")
 
 ```
-
-# Alternative Versions
-
-- [Version in golang](https://github.com/darklab8/go-typelog)
