@@ -31,8 +31,8 @@ Static typing approach brings here consistent way to define key values to final 
 
 examples/types.py
 ```py
-from typing import NewType
 from dataclasses import dataclass
+from typing import NewType
 
 TaskID = NewType("TaskID", int)
 
@@ -45,9 +45,11 @@ class Task:
 
 examples/logtypes.py
 ```py
-from . import types
+from typing import Any, Dict
+
 from typelog import LogType
-from typing import Dict, Any
+
+from . import types
 
 
 def TaskID(value: types.TaskID) -> LogType:
@@ -62,26 +64,23 @@ def Task(value: types.Task) -> LogType:
         params.update(value.__dict__)
 
     return wrapper
-
 ```
 
 examples/test_examples.py
 ```py
-import unittest
-from typelog import get_logger
-import typelog
-from . import logtypes
-from . import types
-from typelog import Loggers, LogConfig
-from typelog.types import LibName, LogLevel, RootLogLevel
 import logging
+import unittest
+
+import typelog
+from typelog import LogConfig, Loggers, get_logger
+from typelog.types import LibName, LogLevel, RootLogLevel
+
+from . import logtypes, types
 
 logger = get_logger(__name__)
 
 
-
 class TestExamples(unittest.TestCase):
-
     def setUp(self) -> None:
         Loggers(
             RootLogLevel(logging.DEBUG),
@@ -97,12 +96,12 @@ class TestExamples(unittest.TestCase):
         logger.warn("Writing something", logtypes.Task(task))
 
     def test_with_fields(self) -> None:
-
         logger2 = logger.with_fields(logtypes.Task(types.Task(smth="aaa", b=1)))
-        logger3 = logger.with_fields(typelog.String("smth", "asd"), typelog.Int("number", 2))
+        logger3 = logger.with_fields(
+            typelog.String("smth", "asd"), typelog.Int("number", 2)
+        )
 
         logger.info("logger printed")
         logger2.info("logger2 printed")
         logger3.info("logger3 printed")
-
 ```

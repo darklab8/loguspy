@@ -10,7 +10,7 @@ At the same time properly generated type safe stubs
 """
 from pathlib import Path
 
-pathlist = Path(".").rglob('*.pyi')
+pathlist = Path(".").rglob("*.pyi")
 for path in pathlist:
     path_in_str = str(path)
     if ".venv" in path_in_str:
@@ -18,7 +18,7 @@ for path in pathlist:
 
     with open(path_in_str, "r") as file:
         pyi_file = file.readlines()
-    with open(path_in_str.replace("-stubs","").replace(".pyi", ".py"), "r") as file:
+    with open(path_in_str.replace("-stubs", "").replace(".pyi", ".py"), "r") as file:
         py_file = file.readlines()
 
     has_new_types = False
@@ -28,7 +28,7 @@ for path in pathlist:
         if "NewType" in py_line:
             varname: str = py_line.split(" ")[0]
             has_new_types = True
-            
+
             for pyi_i, pyi_line in enumerate(pyi_file):
                 if f"{varname}: Incomplete\n" == pyi_line:
                     pyi_file[pyi_i] = py_line

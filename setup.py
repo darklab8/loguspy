@@ -1,5 +1,5 @@
 # setup.py
 
-from setuptools import setup # type: ignore[import-untyped]
+from setuptools import setup  # type: ignore[import-untyped]
 
 setup()

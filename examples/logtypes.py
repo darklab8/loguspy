@@ -1,6 +1,8 @@
-from . import types
+from typing import Any, Dict
+
 from typelog import LogType
-from typing import Dict, Any
+
+from . import types
 
 
 def TaskID(value: types.TaskID) -> LogType:

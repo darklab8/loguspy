@@ -8,7 +8,7 @@ tasks:
   mypy:
     desc: Run mypy tests
     cmds:
-      - mypy .
+      - mypy --exclude .venv .
 
   flake8:
     cmds:
@@ -18,10 +18,10 @@ tasks:
     desc: To format with black and remove not needed imported libraries
     cmds:
       - rm -R typelog-stubs | true
-      - black typelog
-      - isort --profile black -sl typelog
-      - autoflake --remove-all-unused-imports --ignore-init-module-imports -i -r typelog
-      - isort -m 3 typelog
+      - black .
+      - isort --profile black -sl --skip .venv .
+      - autoflake --remove-all-unused-imports --ignore-init-module-imports -i -r --exclude .venv .
+      - isort -m 3 --skip .venv .
       - task: flake8
       - task: mypy
 

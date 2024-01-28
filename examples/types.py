@@ -1,5 +1,5 @@
-from typing import NewType
 from dataclasses import dataclass
+from typing import NewType
 
 TaskID = NewType("TaskID", int)
 
