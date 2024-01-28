@@ -3,6 +3,10 @@ Fix to stubgen
 stubgen replaces NewType to Incomplete.
 We discover files with NewType and
 replace them in stubgen generated files back to NewType
+
+This solution allows us easily still using NewTypes across our code
+and having higher type safety
+At the same time properly generated type safe stubs
 """
 from pathlib import Path
 
