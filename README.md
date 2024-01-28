@@ -22,6 +22,8 @@ In order to function with python well, recommendation to turn on
 - [strict mypy](<https://careers.wolt.com/en/blog/tech/professional-grade-mypy-configuration>)
 - or pyright in one of [its mods](<https://github.com/microsoft/pyright/blob/main/docs/configuration.md>)
 
+[Published at pypi](https://pypi.org/project/logus/)
+
 # Alternative Versions
 
 - [Version in golang](https://github.com/darklab8/logusgo)
