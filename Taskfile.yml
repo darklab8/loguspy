@@ -39,6 +39,7 @@ tasks:
       - rm -R typelog.egg-info | true
       - rm -R typelog-stubs | true
       - stubgen typelog -o stubs && mv stubs/typelog typelog-stubs && rm -R stubs
+      - python3 stubgen_fix.py
       - python3 -m build
 
   build:check:
