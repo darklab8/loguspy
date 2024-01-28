@@ -1,10 +1,10 @@
 import json
 import logging
 from copy import deepcopy
-from typing import Dict, List, Optional
+from typing import Dict, Tuple, Optional
 
 from . import settings
-from .logtypes import LogOption, LogParams
+from .types import LogType, LogAttrs
 
 log_levels_str_to_int: Dict[str, int] = {"": logging.WARN}
 log_levels_str_to_int.update(logging._nameToLevel)
@@ -17,11 +17,11 @@ class StructuredMessage:
         self,
         message: str,
         turn_json: Optional[bool],
-        *args: LogOption,
+        *args: LogType,
     ) -> None:
         self._message = message
         self._turn_json = turn_json
-        self._kwargs: LogParams = LogParams({})
+        self._kwargs: LogAttrs = LogAttrs({})
         for add_option in args:
             add_option(self._kwargs)
 
@@ -44,36 +44,36 @@ class StructuredMessage:
 sm = StructuredMessage
 
 
-class Logus:
+class Typelog:
     def __init__(self, name: str, turn_json: Optional[bool]):
         """
         pass __file__ into file
         """
         self.logger = logging.getLogger(name)
         self.logger.setLevel(default_log_level)
-        self._with_fields: List[LogOption] = []
+        self._with_fields: Tuple[LogType] = tuple() # type: ignore[assignment]
         self._turn_json = turn_json
 
-    def debug(self, message: str, *args: LogOption) -> None:
-        self.logger.debug(StructuredMessage(message, self._turn_json, *args))
+    def debug(self, message: str, *args: LogType) -> None:
+        self.logger.debug(StructuredMessage(message, self._turn_json, *(args+self._with_fields)))
 
-    def info(self, message: str, *args: LogOption) -> None:
-        self.logger.info(StructuredMessage(message, self._turn_json, *args))
+    def info(self, message: str, *args: LogType) -> None:
+        self.logger.info(StructuredMessage(message, self._turn_json, *(args+self._with_fields)))
 
-    def warn(self, message: str, *args: LogOption) -> None:
-        self.logger.warning(StructuredMessage(message, self._turn_json, *args))
+    def warn(self, message: str, *args: LogType) -> None:
+        self.logger.warning(StructuredMessage(message, self._turn_json, *(args+self._with_fields)))
 
-    def error(self, message: str, *args: LogOption) -> None:
-        self.logger.error(StructuredMessage(message, self._turn_json, *args))
+    def error(self, message: str, *args: LogType) -> None:
+        self.logger.error(StructuredMessage(message, self._turn_json, *(args+self._with_fields)))
 
-    def fatal(self, message: str, *args: LogOption) -> None:
-        self.logger.fatal(StructuredMessage(message, self._turn_json, *args))
+    def fatal(self, message: str, *args: LogType) -> None:
+        self.logger.fatal(StructuredMessage(message, self._turn_json, *(args+self._with_fields)))
 
-    def with_fields(self, *args: LogOption) -> "Logus":
+    def with_fields(self, *args: LogType) -> "Typelog":
         logger = deepcopy(self)
-        logger._with_fields.extend(args)
+        logger._with_fields = args # type: ignore[assignment]
         return logger
 
 
-def get_logger(file: str, turn_json: Optional[bool] = None) -> Logus:
-    return Logus(file, turn_json)
+def get_logger(file: str, turn_json: Optional[bool] = None) -> Typelog:
+    return Typelog(file, turn_json)

@@ -31,9 +31,9 @@ jobs:
         run: |
           task dev:install
       - name: Black
-        run: black --check logus
+        run: black --check typelog
       - name: Isort
-        run: isort --profile black --check logus
+        run: isort --profile black --check typelog
       - name: Flake8
         uses: py-actions/flake8@v2
       - name: Tests

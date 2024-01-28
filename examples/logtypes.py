@@ -1,16 +1,16 @@
-from . import app_types
-from logus import LogOption
+from . import types
+from typelog import LogType
 from typing import Dict, Any
 
 
-def TaskID(value: app_types.TaskID) -> LogOption:
+def TaskID(value: types.TaskID) -> LogType:
     def wrapper(params: Dict[str, Any]) -> None:
         params["task_id"] = str(value)
 
     return wrapper
 
 
-def Task(value: app_types.Task) -> LogOption:
+def Task(value: types.Task) -> LogType:
     def wrapper(params: Dict[str, Any]) -> None:
         params.update(value.__dict__)
 

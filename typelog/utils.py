@@ -18,11 +18,11 @@ class Loggers:
     log_levels: Dict[LibName, LogLevel] = field(default_factory=dict)
     turn_json: bool = False
 
-    add_thread: bool = os.environ.get("LOGUS_ADD_THREAD") == "true"
-    add_process: bool = os.environ.get("LOGUS_ADD_PROCESS") == "true"
-    add_level: bool = os.environ.get("LOGUS_ADD_LEVEL") == "true"
-    add_filepath: bool = os.environ.get("LOGUS_ADD_FILEPATH") == "true"
-    add_time: bool = os.environ.get("LOGUS_ADD_TIME") == "true"
+    add_thread: bool = os.environ.get("TYPELOG_ADD_THREAD") == "true"
+    add_process: bool = os.environ.get("TYPELOG_ADD_PROCESS") == "true"
+    add_level: bool = os.environ.get("TYPELOG_ADD_LEVEL") == "true"
+    add_filepath: bool = os.environ.get("TYPELOG_ADD_FILEPATH") == "true"
+    add_time: bool = os.environ.get("TYPELOG_ADD_TIME") == "true"
 
     @property
     def _is_turn_json(self) -> bool:

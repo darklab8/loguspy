@@ -12,15 +12,15 @@ tasks:
 
   flake8:
     cmds:
-      - flake8 logus
+      - flake8 typelog
 
   format:
     desc: To format with black and remove not needed imported libraries
     cmds:
-      - black logus
-      - isort --profile black -sl logus
-      - autoflake --remove-all-unused-imports --ignore-init-module-imports -i -r logus
-      - isort -m 3 logus
+      - black typelog
+      - isort --profile black -sl typelog
+      - autoflake --remove-all-unused-imports --ignore-init-module-imports -i -r typelog
+      - isort -m 3 typelog
       - task: flake8
       - task: mypy
 
@@ -34,6 +34,8 @@ tasks:
 
   build:build:
     cmds:
+      - rm -R dist | true
+      - rm -R typelog.egg-info | true
       - python3 -m build
 
   build:check:
