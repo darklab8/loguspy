@@ -3,7 +3,7 @@ from typelog import get_logger
 import typelog
 from . import logtypes
 from . import types
-from typelog.utils import Loggers, LogConfig
+from typelog import Loggers, LogConfig
 from typelog.types import LibName, LogLevel, RootLogLevel
 import logging
 

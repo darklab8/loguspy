@@ -9,7 +9,7 @@ from .types import LogAttrs, LogType
 log_levels_str_to_int: Dict[str, int] = {"": logging.WARN}
 log_levels_str_to_int.update(logging._nameToLevel)
 
-default_log_level = log_levels_str_to_int[settings.LOG_LEVEL]
+default_log_level: int = log_levels_str_to_int[settings.log_level]
 
 
 class StructuredMessage:
@@ -21,12 +21,12 @@ class StructuredMessage:
     ) -> None:
         self._message = message
         self._turn_json = turn_json
-        self._kwargs: LogAttrs = LogAttrs({})
+        self._kwargs: LogAttrs = {}
         for add_option in args:
             add_option(self._kwargs)
 
     def __str__(self) -> str:
-        if settings.LOG_JSON or self._turn_json:
+        if settings.log_json or self._turn_json:
             return json.dumps(self.to_dict())
 
         if len(self._kwargs.keys()) == 0:
@@ -49,33 +49,33 @@ class Typelog:
         """
         pass __file__ into file
         """
-        self.logger = logging.getLogger(name)
-        self.logger.setLevel(default_log_level)
+        self._logger = logging.getLogger(name)
+        self._logger.setLevel(default_log_level)
         self._with_fields: Tuple[LogType] = tuple()  # type: ignore[assignment]
         self._turn_json = turn_json
 
     def debug(self, message: str, *args: LogType) -> None:
-        self.logger.debug(
+        self._logger.debug(
             StructuredMessage(message, self._turn_json, *(args + self._with_fields))
         )
 
     def info(self, message: str, *args: LogType) -> None:
-        self.logger.info(
+        self._logger.info(
             StructuredMessage(message, self._turn_json, *(args + self._with_fields))
         )
 
     def warn(self, message: str, *args: LogType) -> None:
-        self.logger.warning(
+        self._logger.warning(
             StructuredMessage(message, self._turn_json, *(args + self._with_fields))
         )
 
     def error(self, message: str, *args: LogType) -> None:
-        self.logger.error(
+        self._logger.error(
             StructuredMessage(message, self._turn_json, *(args + self._with_fields))
         )
 
     def fatal(self, message: str, *args: LogType) -> None:
-        self.logger.fatal(
+        self._logger.fatal(
             StructuredMessage(message, self._turn_json, *(args + self._with_fields))
         )
 

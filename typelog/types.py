@@ -1,11 +1,11 @@
-from typing import Any, Callable, Dict, NewType
+from typing import Any, Callable, Dict
 
-LogAttrs = NewType("LogAttrs", Dict[str, Any])
+Serialazable = Any
+
+LogAttrs = Dict[str, Serialazable]
 LogType = Callable[[LogAttrs], None]
 
 
-LibName = NewType("LibName", str)
-LogLevel = NewType("LogLevel", int)
-RootLogLevel = NewType("RootLogLevel", int)
-
-Serialazable = Any
+LibName = str
+LogLevel = int
+RootLogLevel = LogLevel

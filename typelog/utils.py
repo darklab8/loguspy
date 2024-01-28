@@ -4,8 +4,6 @@ from typing import List
 
 from . import settings, types
 
-is_configured: bool = False
-
 
 class LogConfig:
     def __init__(
@@ -22,7 +20,7 @@ class Loggers:
         self,
         root_log_level: types.RootLogLevel,
         *log_configs: LogConfig,
-        turn_json: bool = settings.LOG_JSON,
+        turn_json: bool = settings.log_json,
         add_thread: bool = settings.add_thread,
         add_process: bool = settings.add_thread,
         add_level: bool = settings.add_thread,
@@ -40,7 +38,7 @@ class Loggers:
 
     @property
     def _is_turn_json(self) -> bool:
-        return settings.LOG_JSON or bool(self.turn_json)
+        return settings.log_json or bool(self.turn_json)
 
     @property
     def _format_json(self) -> str:
@@ -88,11 +86,6 @@ class Loggers:
         """
         print("Configured debugging logging")
 
-        global is_configured
-
-        if is_configured:
-            return
-
         for log_config in self.log_configs:
             loggers = [
                 logging.getLogger(name)
@@ -103,6 +96,9 @@ class Loggers:
                 logger.setLevel(log_config.log_level)
 
         root_logger = logging.getLogger("")
+        while root_logger.hasHandlers():
+            root_logger.removeHandler(root_logger.handlers[0])
+
         root_logger.setLevel(self.root_log_level)
         ch = logging.StreamHandler()
         ch.setLevel(self.root_log_level)
@@ -112,5 +108,3 @@ class Loggers:
             formatter = logging.Formatter(self._format_text)
         ch.setFormatter(formatter)
         root_logger.addHandler(ch)
-
-        is_configured = True

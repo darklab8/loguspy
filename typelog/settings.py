@@ -1,7 +1,7 @@
 import os
 
-LOG_LEVEL: str = os.environ.get("TYPELOG_LOG_LEVEL", "")
-LOG_JSON: bool = os.environ.get("TYPELOG_LOG_JSON", "") == "true"
+log_level: str = os.environ.get("TYPELOG_LOG_LEVEL", "")
+log_json: bool = os.environ.get("TYPELOG_LOG_JSON", "") == "true"
 
 add_thread: bool = os.environ.get("TYPELOG_ADD_THREAD") == "true"
 add_process: bool = os.environ.get("TYPELOG_ADD_PROCESS") == "true"

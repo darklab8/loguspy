@@ -17,6 +17,7 @@ tasks:
   format:
     desc: To format with black and remove not needed imported libraries
     cmds:
+      - rm -R typelog-stubs | true
       - black typelog
       - isort --profile black -sl typelog
       - autoflake --remove-all-unused-imports --ignore-init-module-imports -i -r typelog
