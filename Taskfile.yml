@@ -27,3 +27,23 @@ tasks:
   dev:install:
     cmds:
       - pip install -r requirements/requirements.dev.txt
+
+  build:install:
+    cmds:
+      - pip install setuptools build twine
+
+  build:build:
+    cmds:
+      - python3 -m build
+
+  build:check:
+    cmds:
+      - twine check dist/*
+
+  build:upload:test:
+    cmds:
+      - twine upload --repository testpypi dist/*
+
+  build:upload:prod:
+    cmds:
+      - twine upload --repository pypi dist/*
