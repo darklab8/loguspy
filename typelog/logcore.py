@@ -16,8 +16,8 @@ class StructuredMessage:
     def __init__(
         self,
         message: str,
-        turn_json: Optional[bool],
         *args: LogType,
+        turn_json: Optional[bool] = None,
     ) -> None:
         self._message = message
         self._turn_json = turn_json
@@ -56,27 +56,37 @@ class Typelog:
 
     def debug(self, message: str, *args: LogType) -> None:
         self._logger.debug(
-            StructuredMessage(message, self._turn_json, *(args + self._with_fields))
+            StructuredMessage(
+                message, *(args + self._with_fields), turn_json=self._turn_json
+            )
         )
 
     def info(self, message: str, *args: LogType) -> None:
         self._logger.info(
-            StructuredMessage(message, self._turn_json, *(args + self._with_fields))
+            StructuredMessage(
+                message, *(args + self._with_fields), turn_json=self._turn_json
+            )
         )
 
     def warn(self, message: str, *args: LogType) -> None:
         self._logger.warning(
-            StructuredMessage(message, self._turn_json, *(args + self._with_fields))
+            StructuredMessage(
+                message, *(args + self._with_fields), turn_json=self._turn_json
+            )
         )
 
     def error(self, message: str, *args: LogType) -> None:
         self._logger.error(
-            StructuredMessage(message, self._turn_json, *(args + self._with_fields))
+            StructuredMessage(
+                message, *(args + self._with_fields), turn_json=self._turn_json
+            )
         )
 
     def fatal(self, message: str, *args: LogType) -> None:
         self._logger.fatal(
-            StructuredMessage(message, self._turn_json, *(args + self._with_fields))
+            StructuredMessage(
+                message, *(args + self._with_fields), turn_json=self._turn_json
+            )
         )
 
     def with_fields(self, *args: LogType) -> "Typelog":

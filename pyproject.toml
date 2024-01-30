@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "typelog"
-version = "0.2.7"
+version = "0.2.8"
 description = "Static typed structured logging"
 readme = "README.md"
 authors = [{ name = "dd84ai", email = "dark.dreamflyer@gmail.com" }]
