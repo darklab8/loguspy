@@ -36,5 +36,5 @@ class TestExamples(unittest.TestCase):
         logger3.info("logger3 printed")
 
         log = logger.with_fields(logtypes.Task(types.Task(smth="aaa", b=1)))
-        log = log.with_fields(typelog.Int("asd",5))
+        log = log.with_fields(typelog.Int("asd", 5))
         log.info("print smth")
