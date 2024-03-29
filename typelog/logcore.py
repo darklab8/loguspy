@@ -40,10 +40,6 @@ class StructuredMessage:
     def to_dict(self) -> Dict:
         return {"message": self._message, **self._kwargs}
 
-
-sm = StructuredMessage
-
-
 class Typelog:
     def __init__(self, name: str, turn_json: Optional[bool]):
         """
